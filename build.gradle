@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+group = 'ren.erdong'
+version = '1.0.0'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit'
+}
