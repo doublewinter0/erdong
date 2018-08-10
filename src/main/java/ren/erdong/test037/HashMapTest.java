@@ -25,8 +25,8 @@ public class HashMapTest {
 		map.put("生物", 6);
 		map.put("历史", 7);
 		map.put("地理", 8);
-		map.put("aP", 10);
-		map.put("b1", 20);
+		map.put("b0", 20);
+		map.put("aO", 10);
 		map.put("政治", 9);
 	}
 
