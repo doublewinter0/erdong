@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'idea'
 
 group = 'ren.erdong'
 version = '1.0.0'
@@ -9,6 +10,6 @@ repositories {
 }
 
 dependencies {
-    fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'junit:junit:4.12'
 }

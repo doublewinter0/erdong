@@ -6,6 +6,7 @@
 
 package ren.erdong.test037;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,14 +32,19 @@ public class HashMapTest {
 
 	public static void main(String[] args) throws Exception{
 
-		System.out.println("数学".hashCode());
+		// System.out.println("数学".hashCode());
 
-		// init();
+		init();
+
+		/*
 		for (Map.Entry<String, Integer> entry : map.entrySet()) {
 			System.out.println(entry.getKey() + " = " + entry.getValue());
 		}
 		System.out.println("------我是分割线------");
 		exporeHash();
+		*/
+
+		exploreHashMap();
 	}
 
 	// 对 HashMap 中 static int hash 变量的探究
@@ -55,5 +61,18 @@ public class HashMapTest {
 		System.out.println("化学 = " + Integer.toBinaryString((int) hash.invoke(null, "化学")));
 		// System.out.println(hash.invoke(null, "数学"));
 	}
+
+	private static void exploreHashMap() throws Exception {
+        Class<HashMap> mapClass = HashMap.class;
+        Field table = mapClass.getDeclaredField("table");
+        table.setAccessible(true);
+        Object obj = table.get(map);
+        if (obj instanceof HashMap.Entry[]) {
+            HashMap.Entry[] entries = (HashMap.Entry[]) obj;
+            for (Map.Entry entry : entries) {
+                System.out.println(entry);
+            }
+        }
+    }
 
 }
