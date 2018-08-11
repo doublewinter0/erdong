@@ -32,28 +32,19 @@ public class HashMapTest {
 
 	public static void main(String[] args) throws Exception{
 
-		// System.out.println("数学".hashCode());
-
 		init();
 
-		/*
-		for (Map.Entry<String, Integer> entry : map.entrySet()) {
-			System.out.println(entry.getKey() + " = " + entry.getValue());
-		}
-		System.out.println("------我是分割线------");
-		exporeHash();
-		*/
+		// exporeHash();
 
-		exploreHashMap();
+		// exploreHashMap();
+
+		show();
 	}
 
 	// 对 HashMap 中 static int hash 变量的探究
 	private static void exporeHash() throws Exception {
 		Class<HashMap> mapClass = HashMap.class;
 		Method hash = mapClass.getDeclaredMethod("hash", Object.class);
-		System.out.println(Integer.toBinaryString("aO".hashCode() ^ ("aO".hashCode() >>> 16)));
-		System.out.println("数学".hashCode() ^ ("数学".hashCode() >>> 16));
-		System.out.println(Integer.toBinaryString("数学".hashCode() ^ ("数学".hashCode() >>> 16)));
 		hash.setAccessible(true);
 		System.out.println("aO = " + Integer.toBinaryString((int) hash.invoke(null, "aO")));
 		System.out.println("b0 = " + Integer.toBinaryString((int) hash.invoke(null, "b0")));
@@ -75,4 +66,13 @@ public class HashMapTest {
         }
     }
 
+	private static void show() {
+		Class<HashMap> mapClass = HashMap.class;
+		Field[] fields = mapClass.getDeclaredFields();
+		for (Field field : fields) {
+			System.out.println(field.getType() + " " + field.getName());
+		}
+		String[] strs = {"a", "1"};
+		System.out.println(strs.getClass());
+	}
 }

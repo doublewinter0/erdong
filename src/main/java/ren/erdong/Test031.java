@@ -1,4 +1,3 @@
-
 package ren.erdong;
 
 import java.lang.reflect.Field;
@@ -6,15 +5,14 @@ import java.util.Arrays;
 
 public class Test031 {
 
-
 	public static void main(String[] args) throws Exception {
 
-		// chars();
+		chars();
 		reflect1();
 		// reflect2();
 	}
 
-	public static void chars() {
+	private static void chars() {
 
 		// '\0' 代表空字符
 		char[] chs = {'r', 'e', 'd', '\0', '\0', '\0', '\0', '\0'};
@@ -23,22 +21,22 @@ public class Test031 {
 		System.out.println(Arrays.toString(chs));
 	}
 
-	public static void reflect1() throws Exception {
+	private static void reflect1() throws Exception {
 
 		// 这段代码非常重要, 它揭示了 Java 反射的某种特性!
 		String string = "erdong";
 		Class<String> stringClass = String.class;
 		Field field = stringClass.getDeclaredField("hash");
 		field.setAccessible(true);
-		// System.out.println("string.hashCode = " + string.hashCode());
+		System.out.println("string.hashCode = " + string.hashCode());
 		Object obj = field.get(string);
-		System.out.println("obj.class = " + obj.getClass());
+		System.out.println(field.getType() + "\40" + field.getName());
 		System.out.println("string.hashCode = " + string.hashCode());
 		System.out.println("obj = " + obj);
 
 	}
 
-	public static void reflect2() throws Exception {
+	private static void reflect2() throws Exception {
 
 		Person p = new Person("zs", 18);
 		// Person p2 = new Person("ls", 17);
