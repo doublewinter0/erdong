@@ -1,6 +1,5 @@
 package ren.erdong;
 
-// 
 public class Test015 {
 
 	public static void main(String[] args) throws IllegalArgException {
@@ -33,17 +32,13 @@ public class Test015 {
             for (String anAnAsterisk : anAsterisk) {
                 System.out.print(anAnAsterisk);
             }
-            // if (i != asterisk.length - 1) {
             System.out.println();
-            // }
         }
 	}
 }
 
 class IllegalArgException extends Exception {
-	/**
-	 * serialVersionUID
-	 */
+
 	private static final long serialVersionUID = 303664991849364669L;
 
 	IllegalArgException(String msg) {

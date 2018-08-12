@@ -51,7 +51,7 @@ public class HashMapTest {
             Class cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
             Field logger = cls.getDeclaredField("logger");
             u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
-        } catch (Exception e) {
+        } catch (Exception exp) {
             // ignore
         }
     }

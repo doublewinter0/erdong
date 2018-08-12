@@ -16,10 +16,7 @@ public class Test {
 	// 注意其遵守了 IEEE 754 标准
 	private static void expolreDouble() {
 		System.out.println((0.1 + 0.1) == 0.2);
-		System.out.println((0.1 + 0.1 + 0.1) == 0.3);
-		System.out.println((0.1 + 0.1 + 0.1 + 0.1) == 0.4);
-		System.out.println((0.1 + 0.1 + 0.1 + 0.1 + 0.1) == 0.5);
-		System.out.println((0.6 - 0.1) == 0.5);
+		System.out.println((0.1 + 0.2) == 0.3);
 		System.out.println((0.1 + 0.5) == 0.6);
 		System.out.println((0.2 + 0.4) == 0.6);
 		System.out.println((0.3 + 0.3) == 0.6);
