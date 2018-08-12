@@ -28,7 +28,7 @@ public class Test031 {
 		Class<String> stringClass = String.class;
 		Field field = stringClass.getDeclaredField("hash");
 		field.setAccessible(true);
-		System.out.println("string.hashCode = " + string.hashCode());
+		// System.out.println("string.hashCode = " + string.hashCode());
 		Object obj = field.get(string);
 		System.out.println(field.getType() + "\40" + field.getName());
 		System.out.println("string.hashCode = " + string.hashCode());
