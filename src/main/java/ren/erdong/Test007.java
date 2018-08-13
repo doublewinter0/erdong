@@ -18,7 +18,7 @@ public class Test007 {
 				}
 			}
 		}
-		System.out.println("这组数据共有" + num.length + "个.");
+		System.out.println("这组数据共有" + num.length + "个");
 		System.out.print("按从小到大的顺序排列为:");
 		for (int z = 0; z < num.length; z++) {
 			if (z != num.length - 1) {
