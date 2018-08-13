@@ -31,6 +31,7 @@ public class HashMapTest {
         map.put("b[", 20);
         map.put("c<", 30);
         map.put("政治", 9);
+		map.put("体育", 0);
     }
 
     public static void main(String[] args) throws Exception {
