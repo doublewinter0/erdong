@@ -69,18 +69,24 @@ public class HashMapTest {
     }
 
     private static void exploreHashMap() throws Exception {
-        Class<HashMap> mapClass = HashMap.class;
         // Class<?> nodeClass = Class.forName("java.util.HashMap$Node");
-        Field table = mapClass.getDeclaredField("table");
         // Field[] nodeFields = nodeClass.getDeclaredFields();
+        Class<HashMap> mapClass = HashMap.class;
+        Field table = mapClass.getDeclaredField("table");
+        Field threshold = mapClass.getDeclaredField("threshold");
+        Field loadFactor = mapClass.getDeclaredField("loadFactor");
         table.setAccessible(true);
+        threshold.setAccessible(true);
+        loadFactor.setAccessible(true);
         Object nodes = table.get(map);
         HashMap.Entry[] entries = (HashMap.Entry[]) nodes;
         System.out.println("nodes.length = " + entries.length);
+        System.out.println("threshold = " + threshold.get(map));
+        System.out.println("loadFactor = " + loadFactor.get(map));
         for (int i = 0; i < entries.length; i++) {
             Map.Entry entry;
             if ((entry = entries[i]) == null) {
-                System.out.println("nodes[" + i + "] is null");
+                System.out.println("nodes[" + i + "] = null");
                 continue;
             }
             Field[] entryFields = entry.getClass().getDeclaredFields();
@@ -95,7 +101,7 @@ public class HashMapTest {
                         System.out.println("nodes[" + i + "].value = " + entry.getValue());
                         break;
                     case 3:
-                        if (entryFields[j].get(entry) == null)  System.out.println("nodes[" + i + "].next is null");
+                        if (entryFields[j].get(entry) == null)  System.out.println("nodes[" + i + "].next = null");
                         else {
                             System.out.print("nodes[" + i + "].next");
                             exploreLink(entry);
@@ -114,7 +120,7 @@ public class HashMapTest {
         next.setAccessible(true);
         Map.Entry nodeObj;
         if ((nodeObj = (Map.Entry) next.get(entry)) == null) {
-            System.out.println();
+            System.out.println(" --> null");
             return;
         }
         System.out.print(" --> key = " + nodeObj.getKey() + ", value = " + nodeObj.getValue());
