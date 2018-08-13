@@ -113,7 +113,7 @@ public class HashMapTest {
         next.setAccessible(true);
         Map.Entry nodeObj;
         if ((nodeObj = (Map.Entry) next.get(entry)) == null) {
-            System.out.println();
+            System.out.println(" --> null");
             return;
         }
         System.out.print(" --> key = " + nodeObj.getKey() + ", value = " + nodeObj.getValue());
