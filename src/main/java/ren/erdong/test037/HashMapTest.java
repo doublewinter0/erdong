@@ -39,7 +39,21 @@ public class HashMapTest {
         disableWarning();
 
         init();
-        // exporeHash();
+
+        exploreHash();
+
+        exploreHashMap();
+
+        System.out.println("------我是分割线------");
+        System.out.println(map.remove("政治"));
+        exploreHashMap();
+
+        System.out.println("------我是分割线------");
+        System.out.println(map.remove("语文"));
+        exploreHashMap();
+
+        System.out.println("------我是分割线------");
+        map.clear();
         exploreHashMap();
     }
 
@@ -58,12 +72,13 @@ public class HashMapTest {
     }
 
     // 对 HashMap 中 static int hash 变量的探究
-    private static void exporeHash() throws Exception {
+    private static void exploreHash() throws Exception {
         Class<HashMap> mapClass = HashMap.class;
         Method hash = mapClass.getDeclaredMethod("hash", Object.class);
         hash.setAccessible(true);
-        System.out.println("aO = " + Integer.toBinaryString((int) hash.invoke(null, "aO")));
-        System.out.println("b0 = " + Integer.toBinaryString((int) hash.invoke(null, "b0")));
+        System.out.println("aO = " + Integer.toBinaryString((int) hash.invoke(null, "az")));
+        System.out.println("b0 = " + Integer.toBinaryString((int) hash.invoke(null, "b[")));
+        System.out.println("b0 = " + Integer.toBinaryString((int) hash.invoke(null, "c<")));
         System.out.println("数学 = " + Integer.toBinaryString((int) hash.invoke(null, "数学")));
         System.out.println("化学 = " + Integer.toBinaryString((int) hash.invoke(null, "化学")));
     }
