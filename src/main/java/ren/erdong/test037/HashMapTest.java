@@ -6,7 +6,7 @@
 
 package ren.erdong.test037;
 
-import sun.misc.Unsafe;
+import ren.erdong.utils.ReflectUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -36,7 +36,7 @@ public class HashMapTest {
 
     public static void main(String[] args) throws Exception {
 
-        disableWarning();
+        ReflectUtil.disableWarning();
 
         init();
 
@@ -57,20 +57,6 @@ public class HashMapTest {
         exploreHashMap();
     }
 
-    private static void disableWarning() {
-        try {
-            Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
-            theUnsafe.setAccessible(true);
-            Unsafe u = (Unsafe) theUnsafe.get(null);
-
-            Class cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
-            Field logger = cls.getDeclaredField("logger");
-            u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
-        } catch (Exception exp) {
-            // ignore
-        }
-    }
-
     // 对 HashMap 中 static int hash 变量的探究
     private static void exploreHash() throws Exception {
         Class<HashMap> mapClass = HashMap.class;
@@ -84,7 +70,7 @@ public class HashMapTest {
     }
 
     private static void exploreHashMap() throws Exception {
-        // Class<?> nodeClass = Class.forName("java.util.HashMap$Node");
+        // Class<?> nodeClass = Class.forName("java.utils.HashMap$Node");
         // Field[] nodeFields = nodeClass.getDeclaredFields();
         Class<HashMap> mapClass = HashMap.class;
         Field table = mapClass.getDeclaredField("table");
