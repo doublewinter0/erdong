@@ -1,15 +1,23 @@
-apply plugin: 'java'
-apply plugin: 'idea'
+// This line is for GOD!
 
-group = 'ren.erdong'
-version = '1.0.0'
-sourceCompatibility = 1.8
+plugins {
+    id 'java'
+    id 'idea'
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+}
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
+group = 'com.trasepi'
+version = '1.0.0'
+sourceCompatibility = 1.8
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'junit:junit:4.12'
+    // compile fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly 'org.projectlombok:lombok'
+
+    testCompile 'junit:junit:4.12'
 }
