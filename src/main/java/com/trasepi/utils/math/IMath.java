@@ -19,18 +19,19 @@ public class IMath {
      * @param range elements should between 1 and range
      * @return sequence array
      */
-    public static int[] getNonRRS(int amount, int range) {
+    public static int[] getNonRRS(int amount, int range, boolean isZeroBased) {
 
         if (amount > range) {
-            throw new IllegalArgumentException(String.format("the first arg amount (%d )should less than the second arg range (%d )", amount, range));
+            throw new IllegalArgumentException(String
+                    .format("the first arg amount (%d )should less than the second arg range (%d )", amount, range));
         }
 
         int[] ints = new int[amount];
-        ints[0] = random.nextInt(range);
+        ints[0] = isZeroBased ? random.nextInt(range) : random.nextInt(range) + 1;
         boolean flag = false;
 
         for (int i = 1; i < amount; ++i) {
-            ints[i] = random.nextInt(range);
+            ints[i] = isZeroBased ? random.nextInt(range) : random.nextInt(range) + 1;
             while (true) {
                 for (int j = 0; j < i; ++j) {
                     if (ints[j] == ints[i]) {
@@ -40,9 +41,12 @@ public class IMath {
                 }
                 if (!flag) break;
                 flag = false;
-                ints[i] = random.nextInt(range);
+                ints[i] = isZeroBased ? random.nextInt(range) : random.nextInt(range) + 1;
             }
         }
         return ints;
+    }
+
+    public static void getNonRRS(int i, int allCardsNum) {
     }
 }

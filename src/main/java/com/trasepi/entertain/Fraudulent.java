@@ -1,8 +1,8 @@
 package com.trasepi.entertain;
 
-import org.junit.Test;
+import com.trasepi.utils.math.IMath;
 
-import java.util.Arrays;
+import javax.swing.plaf.basic.BasicScrollPaneUI;
 
 /**
  * 模拟诈金花游戏, 来验证一些特殊牌出现的概率
@@ -10,41 +10,53 @@ import java.util.Arrays;
 public class Fraudulent {
 
     public static void main(String[] args) {
-        byte[] pokers = init();
+        int[] pokers = init();
         // System.out.println(Arrays.toString(pokers));
     }
 
-    private static boolean isFlush(byte[] bts) {
+    // 牌为同花
+    private static boolean isFlush(int[] bts) {
         return false;
     }
 
-    private static boolean isStraight(byte[] bts) {
+    // 牌为顺子
+    private static boolean isStraight(int[] bts) {
         return false;
     }
 
-    private static boolean isLeopard(byte[] bts) {
+    // 牌为豹子
+    private static boolean isLeopard(int[] bts) {
         return false;
     }
 
-    // initialize
-    private static byte[] init() {
+    // 模拟发牌
+    public static int[][] dealCards(int tabCardsNum, int allCardsNum) {
+        int[][] handCardss = new int[16][3];
+        int[] handCards = IMath.getNonRRS(allCardsNum - tabCardsNum, allCardsNum, false);
+        for (int i = 0; i < handCards.length; i++) {
+            // int
+        }
+    }
 
-        byte length = 52;
-        byte subLength = 13;
-        byte interval = 20;
+    // 初始化
+    private static int[] init() {
+
+        int length = 52;
+        int subLength = 13;
+        int interval = 20;
 
         // 所有牌
-        byte[] pokers = new byte[length];
+        int[] pokers = new int[length];
         // 红桃
-        byte[] hearts = new byte[subLength];
+        int[] hearts = new int[subLength];
         // 黑桃
-        byte[] spades = new byte[subLength];
+        int[] spades = new int[subLength];
         // 方片
-        byte[] diamonds = new byte[subLength];
+        int[] diamonds = new int[subLength];
         // 草花
-        byte[] clubs = new byte[subLength];
+        int[] clubs = new int[subLength];
 
-        for (byte i = 0; i < subLength; i++) {
+        for (int i = 0; i < subLength; i++) {
             hearts[i] += (i + 1);
             spades[i] += (i + 1 + interval);
             diamonds[i] += (i + 1 + interval * 2);
