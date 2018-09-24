@@ -1,5 +1,8 @@
 package com.trasepi.utils.math;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Random;
 
 /**
@@ -8,15 +11,18 @@ import java.util.Random;
 public class IMath {
 
     static {
+        LOGGER = LoggerFactory.getLogger(IMath.class);
         random = new Random();
     }
 
+    private static final Logger LOGGER;
     private static Random random;
 
     /**
      * to produce a random sequence which hsa no duplicated elements
+     *
      * @param amount the num of generated elements
-     * @param range elements should between 1 and range
+     * @param range  elements should between 1 and range
      * @return sequence array
      */
     public static int[] getNonRRS(int amount, int range, boolean isZeroBased) {
@@ -44,9 +50,28 @@ public class IMath {
                 ints[i] = isZeroBased ? random.nextInt(range) : random.nextInt(range) + 1;
             }
         }
+        // LOGGER.info(Arrays.toString(ints));
         return ints;
     }
 
-    public static void getNonRRS(int i, int allCardsNum) {
+    public static String timeFormat(long timeMillis) {
+        long secondUnit = 1000;
+        long minuteUnit = 60 * secondUnit;
+        long hourUnit = 60 * minuteUnit;
+        long dayUnit = 24 * hourUnit;
+
+        long count4Day = timeMillis / dayUnit;
+        timeMillis %= dayUnit;
+        long count4Hour = timeMillis / hourUnit;
+        timeMillis %= hourUnit;
+        long count4Minute = timeMillis / minuteUnit;
+        timeMillis %= minuteUnit;
+        long count4Second = timeMillis / secondUnit;
+
+        String dayStr = count4Day == 0 ? "" : count4Day + "天, ";
+        String hourStr = count4Hour == 0 ? "" : count4Hour + "小时, ";
+        String minuteStr = count4Minute == 0 ? "" : count4Minute + "分钟, ";
+        String secondStr = count4Second == 0 ? "" : count4Second + "秒.";
+        return dayStr + hourStr + minuteStr + secondStr;
     }
 }
