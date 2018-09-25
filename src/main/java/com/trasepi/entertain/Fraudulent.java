@@ -17,10 +17,11 @@ public class Fraudulent {
         long begin = System.currentTimeMillis();
 
         for (int s = 1; s <= 1000000000; s++) {
-            int[][] cards = dealCards(tabCardsNum, allCardsNum);
-            for (int[] card : cards) {
-                if (isStraightFlush(card)) count4StraightFlush++;
-                if (isLeopard(card)) count4Leopard++;
+            int[][] cardinals = dealCards(tabCardsNum, allCardsNum);
+            for (int[] cardinal : cardinals) {
+                int[] quotients = quomodSort(cardinal);
+                if (isStraightFlush(cardinal)) count4StraightFlush++;
+                if (isLeopard(cardinal)) count4Leopard++;
             }
             if (s % 10000000 == 0) {
                 System.out.println("count4StraightFlush = " + count4StraightFlush);
@@ -32,46 +33,55 @@ public class Fraudulent {
     }
 
     // 同花
-    private static boolean isFlush(int[] cardinal) {
-        if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
+    private static boolean isFlush(int[] quotients, int[] modules) {
+        // if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
 
-        Arrays.sort(cardinal);
-        boolean isHearts = cardinal[2] <= 13;
-        boolean isSpades = cardinal[0] > 20 && cardinal[2] <= (20 + 13);
-        boolean isDiamonds = cardinal[0] > 20 * 2 && cardinal[2] <= (20 * 2 + 13);
-        boolean isClubs = cardinal[0] > 20 * 3 && cardinal[2] <= (20 * 3 + 13);
-        return isHearts || isSpades || isDiamonds || isClubs;
+        // quomodSort(cardinal);
+        // Arrays.sort(cardinal);
+        // boolean isHearts = cardinal[2] <= 13;
+        // boolean isSpades = cardinal[0] > 20 && cardinal[2] <= (20 + 13);
+        // boolean isDiamonds = cardinal[0] > 20 * 2 && cardinal[2] <= (20 * 2 + 13);
+        // boolean isClubs = cardinal[0] > 20 * 3 && cardinal[2] <= (20 * 3 + 13);
+        return (quotients[0] == quotients[2]) && (modules[2] <= 13);
     }
 
     // 顺子
-    private static boolean isStraight(int[] cardinal) {
-        if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
+    private static boolean isStraight(int[] modules) {
+        // if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
 
-        residue(cardinal);
-        Arrays.sort(cardinal);
-        boolean general = (cardinal[0] + 1 == cardinal[1]) && (cardinal[1] + 1 == cardinal[2]);
-        boolean special = (cardinal[0] == 1) && (cardinal[1] == 12) && (cardinal[2] == 13);
+        // quomodSort(cardinal);
+        // Arrays.sort(cardinal);
+        boolean general = (modules[0] + 1 == modules[1]) && (modules[1] + 1 == modules[2]);
+        boolean special = (modules[0] == 1) && (modules[1] == 12) && (modules[2] == 13);
         return general || special;
     }
 
     // 同花顺
-    private static boolean isStraightFlush(int[] cardinal) {
-        return isFlush(cardinal) && isStraight(cardinal);
+    private static boolean isStraightFlush(int[] quotients, int[] modules) {
+        return isFlush(quotients, modules) && isStraight(modules);
     }
 
     // 豹子
-    private static boolean isLeopard(int[] cardinal) {
-        if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
+    private static boolean isLeopard(int[] quotient) {
+        // if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
 
-        residue(cardinal);
-        return (cardinal[0] == cardinal[1]) && (cardinal[1] == cardinal[2]);
+        // quomodSort(cardinal);
+        return (quotient[0] == quotient[1]) && (quotient[0] == quotient[2]);
     }
 
-    private static void residue(int[] cardinal) {
-        int length = cardinal.length;
+    private static int[][] quomodSort(int[] cardinals) {
+        if (cardinals.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
+
+        int length = cardinals.length;
+        int[] quotients = new int[length];
+        int[] modules = new int[length];
         for (int i = 0; i < length; i++) {
-            cardinal[i] = cardinal[i] % 20;
+            quotients[i] = cardinals[i] / 20;
+            modules[i] = cardinals[i] % 20;
         }
+        Arrays.sort(modules);
+        Arrays.sort(quotients);
+        return quotients;
     }
 
     // 模拟发牌
