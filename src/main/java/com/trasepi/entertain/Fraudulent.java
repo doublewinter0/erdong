@@ -8,6 +8,12 @@ import java.util.Arrays;
  * 模拟诈金花游戏, 来验证一些特殊牌出现的概率
  */
 public class Fraudulent {
+
+    static {
+        PROPORTION = 48.0D / 52;
+    }
+    private static final double PROPORTION;
+
     private static long count4StraightFlush;
     private static long count4Leopard;
 
@@ -17,15 +23,16 @@ public class Fraudulent {
         long begin = System.currentTimeMillis();
 
         for (int s = 1; s <= 1000000000; s++) {
-            int[][] cardinals = dealCards(tabCardsNum, allCardsNum);
-            for (int[] cardinal : cardinals) {
-                int[] quotients = quomodSort(cardinal);
-                if (isStraightFlush(cardinal)) count4StraightFlush++;
-                if (isLeopard(cardinal)) count4Leopard++;
+            int[][] cardinal2s = dealCards(tabCardsNum, allCardsNum);
+            for (int[] cardinals : cardinal2s) {
+                int[][] quomod2s = quomodSort(cardinals);
+                if (isStraightFlush(quomod2s[0], quomod2s[1])) count4StraightFlush++;
+                if (isLeopard(quomod2s[1])) count4Leopard++;
             }
             if (s % 10000000 == 0) {
                 System.out.println("count4StraightFlush = " + count4StraightFlush);
                 System.out.println("      count4Leopard = " + count4Leopard);
+                System.out.println("绝对误差: " + Math.abs(PROPORTION - count4StraightFlush * 1.0 / count4Leopard));
                 long semiend = System.currentTimeMillis();
                 System.out.println("已完成 : " + (s / 10000000) + "%, 已耗时: " + IMath.timeFormat(semiend - begin));
             }
@@ -34,23 +41,11 @@ public class Fraudulent {
 
     // 同花
     private static boolean isFlush(int[] quotients, int[] modules) {
-        // if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
-
-        // quomodSort(cardinal);
-        // Arrays.sort(cardinal);
-        // boolean isHearts = cardinal[2] <= 13;
-        // boolean isSpades = cardinal[0] > 20 && cardinal[2] <= (20 + 13);
-        // boolean isDiamonds = cardinal[0] > 20 * 2 && cardinal[2] <= (20 * 2 + 13);
-        // boolean isClubs = cardinal[0] > 20 * 3 && cardinal[2] <= (20 * 3 + 13);
         return (quotients[0] == quotients[2]) && (modules[2] <= 13);
     }
 
     // 顺子
     private static boolean isStraight(int[] modules) {
-        // if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
-
-        // quomodSort(cardinal);
-        // Arrays.sort(cardinal);
         boolean general = (modules[0] + 1 == modules[1]) && (modules[1] + 1 == modules[2]);
         boolean special = (modules[0] == 1) && (modules[1] == 12) && (modules[2] == 13);
         return general || special;
@@ -63,9 +58,6 @@ public class Fraudulent {
 
     // 豹子
     private static boolean isLeopard(int[] quotient) {
-        // if (cardinal.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
-
-        // quomodSort(cardinal);
         return (quotient[0] == quotient[1]) && (quotient[0] == quotient[2]);
     }
 
@@ -75,13 +67,14 @@ public class Fraudulent {
         int length = cardinals.length;
         int[] quotients = new int[length];
         int[] modules = new int[length];
+        int[][] quomod2s = new int[2][length];
         for (int i = 0; i < length; i++) {
             quotients[i] = cardinals[i] / 20;
             modules[i] = cardinals[i] % 20;
         }
-        Arrays.sort(modules);
-        Arrays.sort(quotients);
-        return quotients;
+        Arrays.sort(quotients);  Arrays.sort(modules);
+        quomod2s[0] = quotients;  quomod2s[1] = modules;
+        return quomod2s;
     }
 
     // 模拟发牌
