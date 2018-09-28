@@ -40,8 +40,8 @@ public class Fraudulent {
     }
 
     // 同花
-    private static boolean isFlush(int[] quotients, int[] modules) {
-        return (quotients[0] == quotients[2]) && (modules[2] <= 13);
+    private static boolean isFlush(int[] quotients) {
+        return quotients[0] == quotients[2];
     }
 
     // 顺子
@@ -53,12 +53,12 @@ public class Fraudulent {
 
     // 同花顺
     private static boolean isStraightFlush(int[] quotients, int[] modules) {
-        return isFlush(quotients, modules) && isStraight(modules);
+        return isFlush(quotients) && isStraight(modules);
     }
 
     // 豹子
-    private static boolean isLeopard(int[] quotient) {
-        return (quotient[0] == quotient[1]) && (quotient[0] == quotient[2]);
+    private static boolean isLeopard(int[] modules) {
+        return (modules[0] == modules[1]) && (modules[0] == modules[2]);
     }
 
     private static int[][] quomodSort(int[] cardinals) {
