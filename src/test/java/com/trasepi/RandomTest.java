@@ -2,15 +2,37 @@ package com.trasepi;
 
 
 import com.trasepi.utils.math.IMath;
+import org.junit.Test;
+
+import java.util.Arrays;
 
 public class RandomTest {
-	public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            int[] num = IMath.getNonRRS(48, 52, false);
-            bubbleSort(num);
+
+	@Test
+	public void random() {
+		long begin = System.currentTimeMillis();
+        for (int i = 0; i < 10000000; i++) {
+            int[] nums = IMath.getNonRRS(5000, 10000, true);
+            // bubbleSort(num);
         }
+		long semi = System.currentTimeMillis();
+		System.out.println((semi - begin) / 1000);
+        for (int i = 0; i < 10000000; i++) {
+            int[] nums = IMath.getNonRRS2(5000, 10000, true);
+            // bubbleSort(num);
+        }
+		long end = System.currentTimeMillis();
+		System.out.println((end - semi) / 1000);
 	}
 
+	@Test
+	public void go() {
+		for (int i = 0; i < 10; i++) {
+			int[] nums = IMath.getNonRRS2(6, 10, true);
+			System.out.println(Arrays.toString(nums));
+			// bubbleSort(num);
+		}
+	}
 	private static void bubbleSort(int[] num) {
 		for (int x = num.length - 1; x >= 0; x--) {
 			for (int y = 0; y < x; y++) {

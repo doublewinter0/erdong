@@ -11,9 +11,11 @@ public class Fraudulent {
 
     static {
         PROPORTION = 48.0D / 52;
+        initCards = initCards();
     }
     private static final double PROPORTION;
 
+    private static int[] initCards;
     private static long count4StraightFlush;
     private static long count4Leopard;
 
@@ -25,10 +27,10 @@ public class Fraudulent {
         for (int s = 1; s <= 1000000000; s++) {
             int[][] cardinal2s = dealCards(tabCardsNum, allCardsNum);
             for (int[] cardinals : cardinal2s) {
-                int[][] quomod2s = quomodSort(cardinals);
-                if (isStraightFlush(quomod2s[0], quomod2s[1])) count4StraightFlush++;
-                if (isLeopard(quomod2s[1])) count4Leopard++;
-            }
+                 int[][] quomod2s = quomodSort(cardinals);
+                 if (isStraightFlush(quomod2s[0], quomod2s[1])) count4StraightFlush++;
+                 if (isLeopard(quomod2s[1])) count4Leopard++;
+             }
             if (s % 10000000 == 0) {
                 System.out.println("count4StraightFlush = " + count4StraightFlush);
                 System.out.println("      count4Leopard = " + count4Leopard);
@@ -81,7 +83,6 @@ public class Fraudulent {
     private static int[][] dealCards(int tabCardsNum, int allCardsNum) {
         int handCardsNum = allCardsNum - tabCardsNum;
         if ((handCardsNum) % (3 * 2) != 0) throw new IllegalArgumentException("Please Intput Correct Args!");
-        int[] initCards = initCards();
         int[] ranseq = IMath.getNonRRS(handCardsNum, allCardsNum, true);
         int[] handCards = new int[handCardsNum];
         for (int i = 0; i < handCardsNum; i++) {

@@ -3,7 +3,7 @@ package com.trasepi.utils.math;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
+import java.util.*;
 
 /**
  * my math util class
@@ -25,7 +25,7 @@ public class IMath {
      * @param range  elements should between 1 and range
      * @return sequence array
      */
-    public static int[] getNonRRS(int amount, int range, boolean isZeroBased) {
+    public static int[] getNonRRS2(int amount, int range, boolean isZeroBased) {
 
         if (amount > range) {
             throw new IllegalArgumentException(String
@@ -51,6 +51,37 @@ public class IMath {
             }
         }
         // LOGGER.info(Arrays.toString(ints));
+        return ints;
+    }
+
+    /**
+     * @param amount      the num of generated elements
+     * @param range       the range of these elements
+     * @param isZeroBased from 0 or 1
+     * @return sequence array
+     */
+    public static int[] getNonRRS(int amount, int range, boolean isZeroBased) {
+        if (amount > range) {
+            throw new IllegalArgumentException(String
+                    .format("the first arg amount (%d )should less than the second arg range (%d )", amount, range));
+        }
+
+        List<Integer> numList = new LinkedList<>();
+        if (isZeroBased) {
+            for (int i = 0; i < range; i++) {
+                numList.add(i);
+            }
+        } else {
+            for (int i = 0; i < range; i++) {
+                numList.add(i + 1);
+            }
+        }
+
+        int[] ints = new int[amount];
+        int length = ints.length;
+        for (int i = 0; i < length; i++) {
+            ints[i] = numList.remove(random.nextInt(numList.size()));
+        }
         return ints;
     }
 
