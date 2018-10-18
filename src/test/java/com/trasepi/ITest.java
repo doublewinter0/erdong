@@ -2,6 +2,7 @@ package com.trasepi;
 
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.Arrays;
 
 import static java.util.Arrays.sort;
@@ -32,4 +33,12 @@ public class ITest {
         sort(ints);
         System.out.println(Arrays.toString(ints));
     }
+
+    @Test
+	public void colorTest() {
+		System.out.println(Color.GRAY.getRGB());
+		System.out.println(Color.GRAY.getRed());
+		System.out.println(Color.GRAY.getGreen());
+		System.out.println(Color.GRAY.getBlue());
+	}
 }
