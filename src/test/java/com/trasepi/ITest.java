@@ -24,7 +24,6 @@ public class ITest {
 		System.out.println((int) d1);
 		System.out.println((int) d2);
 		System.out.println((int) d3);
-		System.out.println(Double.toString(d1));
 	}
 
     @Test
