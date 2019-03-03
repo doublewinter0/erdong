@@ -1,7 +1,7 @@
 package com.trasepi;
 
 
-import com.trasepi.utils.math.IMath;
+import com.trasepi.util.math.IMath;
 import org.junit.Test;
 
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package com.trasepi.proxy;
 
-import com.trasepi.utils.ProxyUtil;
-import com.trasepi.utils.ReflectUtil;
+import com.trasepi.util.ProxyUtil;
+import com.trasepi.util.ReflectUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;

@@ -1,7 +1,5 @@
 package com.trasepi.test001;
 
-import org.junit.Test;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,7 +8,7 @@ import java.util.concurrent.Executors;
  */
 public class ThreadPoolTest {
 
-    @Test
+    // @Test
     public void test() {
 
         // 获取逻辑处理器个数

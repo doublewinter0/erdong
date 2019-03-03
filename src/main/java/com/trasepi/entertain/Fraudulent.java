@@ -1,6 +1,6 @@
 package com.trasepi.entertain;
 
-import com.trasepi.utils.math.IMath;
+import com.trasepi.util.math.IMath;
 
 import java.util.Arrays;
 
@@ -92,9 +92,7 @@ public class Fraudulent {
         int round = handCardsNum / 3;
         int[][] handCardss = new int[round][3];
         for (int i = 0; i < handCardss.length; i++) {
-            if (handCardss[i].length >= 0) {
-                System.arraycopy(handCards, 3 * i, handCardss[i], 0, handCardss[i].length);
-            }
+            System.arraycopy(handCards, 3 * i, handCardss[i], 0, handCardss[i].length);
         }
         return handCardss;
     }

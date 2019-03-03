@@ -1,4 +1,4 @@
-package com.trasepi.utils;
+package com.trasepi.util;
 
 import java.awt.*;
 import java.util.Collection;
@@ -19,10 +19,11 @@ public class ColorUtil {
 
     /**
      * 产生一系列颜色, 这些颜色与给定的颜色相互之间色差明显
-     * @param collection 已有颜色集合
+     * @param originColorList 已有颜色集合
      * @return 新颜色集合
      */
-    public static Collection<Color> randomColor(Collection<Color> collection) {
+    public static Collection<Color> randomColor(Collection<Color> originColorList) {
+
         /*
          * 如何去定义两种颜色的色差明显呢? 我们定义了一种简单算法.
          * 通过测试我们发现, (1,0,0) 和 (0,1,0) 这两种颜色非常接近, 而 (1,1,1) 和 (255,255,255) 这两种颜色色差十分明显.
@@ -31,6 +32,9 @@ public class ColorUtil {
         boolean valid = false;
         Random random = new Random();
         Color color = new Color(random.nextInt(RANGE), random.nextInt(RANGE), random.nextInt(RANGE));
+        originColorList.forEach(item -> {
+
+        });
         return null;
     }
 

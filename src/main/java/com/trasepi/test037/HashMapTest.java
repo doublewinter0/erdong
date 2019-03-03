@@ -6,7 +6,7 @@
 
 package com.trasepi.test037;
 
-import com.trasepi.utils.ReflectUtil;
+import com.trasepi.util.ReflectUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -70,7 +70,7 @@ public class HashMapTest {
     }
 
     private static void exploreHashMap() throws Exception {
-        // Class<?> nodeClass = Class.forName("java.utils.HashMap$Node");
+        // Class<?> nodeClass = Class.forName("java.util.HashMap$Node");
         // Field[] nodeFields = nodeClass.getDeclaredFields();
         Class<HashMap> mapClass = HashMap.class;
         Field table = mapClass.getDeclaredField("table");
