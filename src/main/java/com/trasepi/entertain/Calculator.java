@@ -12,148 +12,140 @@ package com.trasepi.entertain;
 public class Calculator {
 
     public static void main(String[] args) {
-
-        String str = "12/3*9+6*6/2";
-        String srt2 = "6/((3-2)*2)*12/3*(9+6+5)";
-
-        System.out.println("result = " + go(srt2));
-
-        // String str = "12+300-90+16*2";
-        // int result = goo(str);
-        // System.out.println(result);
-
-
-        // int replace = calculate(int2s);
-        // sb.append(str).replace(int2s[1][0], int2s[2][0], replace + "");
-        // System.out.println(sb);
-
-        /*assert int2s != null;
-        System.out.println(Arrays.toString(int2s[0]));
-        System.out.println(Arrays.toString(int2s[1]));
-        System.out.println(Arrays.toString(int2s[2]));*/
-        // System.out.println(Arrays.toString(goo));
+        String expression = "1-3+4*(8/(1+3)-5*(7+3)*4+10)/5";
+        System.out.println("result = " + calculate(beautify(expression)));
     }
 
-    private static int go(String str) {
-        int index = str.indexOf(')');
+    // 计算带有 "()" 的四则混合运算
+    private static int calculate(String expression) {
+        int index = expression.indexOf(')');
         if (index > 0) {
-            StringBuilder sb = new StringBuilder();
-            String substring = str.substring(0, index);
+            StringBuilder builder = new StringBuilder();
+            String substring = expression.substring(0, index);
             int indexOf = substring.lastIndexOf('(');
-            StringBuilder sbStr = sb.append(str).replace(indexOf, index + 1, goo(str.substring(indexOf + 1, index)) + "");
-            return go(sbStr.toString());
+            builder.append(expression).replace(indexOf, index + 1, calculateBasic(expression.substring(indexOf + 1, index)) + "");
+            return calculate(builder.toString());
         } else {
-            return goo(str);
+            return calculateBasic(expression);
         }
     }
 
-    private static int goo(String str) {
-        // String str = "12+300/90+1+6-2";
-        // String str = "12/3*9+6*6/2";
-        // String str = "12+300-90+16*2";
-        StringBuilder sb = new StringBuilder();
+    // 计算基本的四则混合运算
+    private static int calculateBasic(String expression) {
 
-        Integer[] indexs = new Integer[4];
-        indexs[0] = str.indexOf('+');
-        indexs[1] = str.indexOf('-');
-        indexs[2] = str.indexOf('*');
-        indexs[3] = str.indexOf('/');
+        final Integer[] indexs = new Integer[]{expression.indexOf('*'), expression.indexOf('/')};
 
-        if ((indexs[2] * indexs[3] > 0 && indexs[2] - indexs[3] < 0) || (indexs[2] * indexs[3] < 0 && indexs[2] - indexs[3] > 0)) {
-            int[] ints1 = parse1(str, indexs[2]);
-            int[] ints2 = parse2(str, indexs[2]);
-            int replace = calculate('*', ints1, ints2);
-            StringBuilder sbStr = sb.append(str).replace(ints1[0], ints2[0], replace + "");
+        StringBuilder builder = new StringBuilder();
+        // 乘法在前面
+        if ((indexs[0] * indexs[1] > 0 && indexs[0] - indexs[1] < 0) || (indexs[0] * indexs[1] < 0 && indexs[0] - indexs[1] > 0)) {
+            int[] prefix = parsePrefix(expression, indexs[0]);
+            int[] suffix = parseSuffix(expression, indexs[0]);
+            int replace = calculatemMltiplication('*', prefix, suffix);
+            StringBuilder sbStr = builder.append(expression).replace(prefix[0], suffix[0], replace + "");
             // System.out.println(sbStr);
-            return goo(sbStr.toString());
-            // return new int[][]{new int[]{'*'}, ints1, ints2};
-        } else if ((indexs[2] * indexs[3] > 0 && indexs[3] - indexs[2] < 0) || (indexs[2] * indexs[3] < 0 && indexs[3] - indexs[2] > 0)) {
-            int[] ints1 = parse1(str, indexs[3]);
-            int[] ints2 = parse2(str, indexs[3]);
-            int replace = calculate('/', ints1, ints2);
-            StringBuilder sbStr = sb.append(str).replace(ints1[0], ints2[0], replace + "");
-            // System.out.println(sbStr);
-            return goo(sbStr.toString());
-            // return new int[][]{new int[]{'/'}, ints1, ints2};
-        } else {
-            //
-            return calculate(str);
+            return calculateBasic(sbStr.toString());
+        } /* 除法在前面 */ else if ((indexs[0] * indexs[1] > 0 && indexs[1] - indexs[0] < 0) || (indexs[0] * indexs[1] < 0 && indexs[1] - indexs[0] > 0)) {
+            int[] prefix = parsePrefix(expression, indexs[1]);
+            int[] suffix = parseSuffix(expression, indexs[1]);
+            int replace = calculatemMltiplication('/', prefix, suffix);
+            builder.append(expression).replace(prefix[0], suffix[0], replace + "");
+            // System.out.println(builder);
+            return calculateBasic(builder.toString());
+        } /* 不含乘除法 */ else {
+            return calculateAddition(expression);
         }
     }
 
-    private static int[] parse1(String str, int index) {
-        // StringBuilder sb = new StringBuilder();
-        String replace1 = str.replace('+', '?');
-        String replace2 = replace1.replace('-', '?');
+    // 解析运算符前面的数
+    private static int[] parsePrefix(String str, int index) {
+        String replace = str.replace('+', '?');
         int begin = index - 1;
         int i = -1;
         while (true) {
             try {
-                i = Integer.parseInt(replace2.substring(begin, index));
+                i = Integer.parseInt(replace.substring(begin, index));
             } catch (Exception exp) {
                 // exp.printStackTrace();
-                return new int[]{begin + 1, i};
+                String operator = "?-";
+                if (begin < 0 || operator.contains(replace.charAt(begin) + "")) {
+                    return new int[]{begin + 1, i};
+                }
+                return new int[]{begin + 2, -i};
             }
             begin--;
         }
     }
 
-    private static int[] parse2(String str, int index) {
+    // 解析运算符后面的数
+    private static int[] parseSuffix(String str, int index) {
         int begin = index + 1;
         int end = begin + 1;
-        int i = -1;
+        int i = 0;
         while (true) {
             try {
                 i = Integer.parseInt(str.substring(begin, end));
-                end++;
             } catch (Exception exp) {
                 // exp.printStackTrace();
-                return new int[]{end - 1, i};
+                if (end == begin + 1) {
+                    end++;
+                    continue;
+                } else {
+                    // return (flag ? new int[]{end - 1, i} : new int[]{end - 2, i});
+                    return new int[]{end - 1, i};
+                }
             }
+            end++;
         }
     }
 
-    private static int calculate(char ch, int[] parsePrefix, int[] parseSufix) {
+    // 计算两个整数的乘法或除法
+    private static int calculatemMltiplication(char ch, int[] parsePrefix, int[] parseSufix) {
         switch (ch) {
             case '*':
-                // System.out.println("chengfa");
                 return parsePrefix[1] * parseSufix[1];
             case '/':
-                // System.out.println("chufa");
                 return parsePrefix[1] / parseSufix[1];
-            /*case '+':
-                System.out.println("jiafa");
-                return '+';
-            case '-':
-                System.out.println("jianfa");
-                return '-';
-            */
             default:
-                // System.out.println("weizhi");
                 throw new RuntimeException("weizhifuhao");
         }
     }
 
-    private static int calculate(String str) {
+    // 计算加减法
+    private static int calculateAddition(String expression) {
 
-        if (str.indexOf('+') > 0) {
-            String[] split = str.split("\\+");
+        // 运算结果可能出现负数, 比如 1+2-a, a 为一个负数! 针对这种情况, 我们作如下处理
+        expression = expression.replaceAll("--", "\\+");
+
+        // 表达式含加, 减法
+        if (expression.indexOf('+') > 0) {
+            String[] split = expression.split("\\+");
             int sum = 0;
             for (String s : split) {
-                sum += calculate(s);
+                sum += calculateAddition(s);
             }
             return sum;
         }
 
-        if (str.indexOf('-') > 0) {
-            String[] split = str.split("-");
-            int sum = Integer.parseInt(split[0]);
+        // 表达式只含减法
+        if (expression.indexOf('-') >= 0) {
+            String[] split = expression.split("-");
+            int sum;
+            try {
+                sum = Integer.parseInt(split[0]);
+            } catch (NumberFormatException exp) {
+                sum = 0;
+            }
+
             for (int i = 1; i < split.length; i++) {
                 sum -= Integer.parseInt(split[i]);
             }
             return sum;
         }
 
-        return Integer.parseInt(str);
+        return Integer.parseInt(expression);
+    }
+
+    private static String beautify(String expession) {
+        return expession.replaceAll("\\s*", "");
     }
 }
