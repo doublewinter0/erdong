@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 import static java.util.Arrays.sort;
+import static java.util.Arrays.stream;
 
 public class ITest {
 
@@ -39,5 +40,14 @@ public class ITest {
 		System.out.println(Color.GRAY.getRed());
 		System.out.println(Color.GRAY.getGreen());
 		System.out.println(Color.GRAY.getBlue());
+	}
+
+	@Test
+	public void replaceTest() {
+		// String str = "-as--df---jk----l";
+		// System.out.println(str.replaceAll("--", "\\+"));
+
+		String str = " 1 - 3 + 4 * ( 8 / ( 1 + 3 ) - 5 * ( 7 + 3 ) * 4 + 10 ) / 5 ";
+		System.out.println(str.replaceAll("\\s*", ""));
 	}
 }
