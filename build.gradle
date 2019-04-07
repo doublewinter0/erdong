@@ -17,9 +17,15 @@ sourceCompatibility = 1.8
 
 dependencies {
     // 加载本地 jar 包
-    // compile fileTree(dir: 'libs', include: ['*.jar'])
+    // compile fileTree(dir: 'lib', include: ['*.jar'])
     compile 'ch.qos.logback:logback-classic:1.3.0-alpha4'
     compileOnly 'org.projectlombok:lombok:1.18.2'
 
     testCompile 'junit:junit:4.12'
+}
+
+// delete ugly
+task purge(type: Delete, group: 'build', description: '删除无用的构建目录') {
+    delete 'out', 'build'
+    followSymlinks = true
 }
