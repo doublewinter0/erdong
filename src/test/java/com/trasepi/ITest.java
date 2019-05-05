@@ -1,8 +1,10 @@
 package com.trasepi;
 
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
 
 import java.awt.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static java.util.Arrays.sort;
@@ -49,5 +51,10 @@ public class ITest {
 
 		String str = " 1 - 3 + 4 * ( 8 / ( 1 + 3 ) - 5 * ( 7 + 3 ) * 4 + 10 ) / 5 ";
 		System.out.println(str.replaceAll("\\s*", ""));
+	}
+
+	@Test
+	public void go() {
+		System.out.println(Hex.encodeHexString(("234567890123456789").getBytes(StandardCharsets.UTF_8)));
 	}
 }

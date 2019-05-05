@@ -9,10 +9,15 @@ public class Sqrt {
 
 	public static void main(String[] args) {
 		// long num = 4234567890123456789L;
-		long num = 234567890123456789L;
+		// long num = 234567890123456789L;
+		long num = 48L;
 		int basePowerOf2 = getBasePowerOf2(num) / 2;
 		long integerPart = getIntegerPart((long) Math.pow(2, basePowerOf2), (long) Math.pow(2, basePowerOf2 + 1), num);
-		System.out.println(integerPart + getDecimalPart(num, integerPart, 0.1D, 0, 18));
+		if (integerPart * integerPart == num) {
+			System.out.println(integerPart);
+		} else {
+			System.out.println(integerPart + getDecimalPart(num, integerPart, 0.1D, 0, 18));
+		}
 	}
 
 	/**
@@ -30,8 +35,8 @@ public class Sqrt {
 
 	/**
 	 * @param inf 参见 @description
-	 * @param sup   参见 @description
-	 * @param num   参见 @description
+	 * @param sup 参见 @description
+	 * @param num 参见 @description
 	 * @return long 待开平方数的整数部分
 	 * @description 这个函数用于确定待开平方数的整数部分, 基本原理很简单: 二分法!
 	 * 直接从 (0, num) 二分是不理想的, 当 num 很大时尤为明显!
@@ -47,7 +52,7 @@ public class Sqrt {
 
 	/**
 	 * @param num       待开平放数
-	 * @param inf     二分法整数下界
+	 * @param inf       二分法整数下界
 	 * @param decimal   小数分位
 	 * @param predicate 候选数
 	 * @param precision 精度
@@ -71,7 +76,7 @@ public class Sqrt {
 	 * @param start     分位起始数字 [1,4]
 	 * @param end       分位结束数字 [5,8]
 	 * @param num       待开平放数
-	 * @param inf         二分法整数下界
+	 * @param inf       二分法整数下界
 	 * @param decimal   小数分位
 	 * @param predicate 候选数
 	 * @return double 分位值
