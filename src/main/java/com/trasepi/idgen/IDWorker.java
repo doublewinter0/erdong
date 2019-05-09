@@ -2,6 +2,9 @@ package com.trasepi.idgen;
 
 import org.joda.time.DateTime;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
  * @author erdong
  * @description 雪花 id
@@ -50,6 +53,18 @@ public class IDWorker {
 		this.workerId = workerId;
 	}
 
+	public static void main(String[] args) {
+		Set<Long> idSet = new LinkedHashSet<>();
+		IDWorker worker = new IDWorker(1, 1);
+		long begin = System.currentTimeMillis();
+		for (int i = 0; i < 100000000; i++) {
+			//idSet.add(worker.nextId());
+			worker.nextId();
+		}
+		System.out.println("time: " + (System.currentTimeMillis() - begin));
+		// System.out.println(idSet.size());
+	}
+
 	public synchronized long nextId() {
 		long timestamp = timeGen();
 		// 时间回拨，抛出异常
@@ -91,12 +106,5 @@ public class IDWorker {
 
 	private long timeGen() {
 		return System.currentTimeMillis();
-	}
-
-	public static void main(String[] args) {
-		IDWorker worker = new IDWorker(1, 1);
-		for (int i = 0; i < 30; i++) {
-			System.out.println(worker.nextId());
-		}
 	}
 }
