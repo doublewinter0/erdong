@@ -2,15 +2,12 @@ package me.hoobaler.idgen;
 
 import org.joda.time.DateTime;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 /**
  * @author erdong
  * @description 雪花 id
  * @date 17:18 2019/5/5
  **/
-public class IDWorker {
+public class IDWorker implements Runnable {
 
 	private static final long TWEPOCH;
 
@@ -27,11 +24,12 @@ public class IDWorker {
 		TWEPOCH = dateTime.getMillis();
 	}
 
-	private long count = 0;
-
 	private long workerId;
 	private long datacenterId;
 	private long sequence = 0;
+
+	private long interrupted = 0;
+	private long idled = 0;
 	/**
 	 * 2018/9/29日，从此时开始计算，可以用到2089年
 	 */
@@ -54,18 +52,14 @@ public class IDWorker {
 	}
 
 	public static void main(String[] args) {
-		Set<Long> idSet = new LinkedHashSet<>();
-		IDWorker worker = new IDWorker(1, 1);
-		long begin = System.currentTimeMillis();
-		for (int i = 0; i < 10000000; i++) {
-			worker.nextId();
-			// idSet.add(worker.nextId());
-			// System.out.println(id);
+		// Set<Long> idSet = new LinkedHashSet<>();
+		// IDWorker worker = new IDWorker(1, 1);
+		for (int i = 0; i < 4; i++) {
+			Thread thread = new Thread(new IDWorker(1, 1));
+			thread.setName("thread" + i);
+			thread.start();
 		}
-		System.out.println("time: " + (System.currentTimeMillis() - begin));
-		System.out.println(worker.count);
-		// System.out.println(idSet.size());
-		// IOUtil.write2File(new File("idworker.txt"), idSet);
+
 	}
 
 	public synchronized long nextId() {
@@ -81,12 +75,13 @@ public class IDWorker {
 			sequence = (sequence + 1) & sequenceMask;
 			// System.out.println("sequence = " + sequence);
 			if (sequence == 0) {
+				idled++;
 				// System.out.println("sequence is 0");
 				timestamp = tilNextMillis(lastTimestamp);
 			}
 		} else {
 			// System.out.println(timestamp + " ---> " + lastTimestamp);
-			count++;
+			interrupted++;
 			sequence = 0;
 		}
 
@@ -107,5 +102,23 @@ public class IDWorker {
 
 	private long timeGen() {
 		return System.currentTimeMillis();
+	}
+
+	@Override
+	public void run() {
+		// long Interrupted = 0;
+		// System.out.println(Thread.currentThread().getName() + " ---> " + "begin...");
+		long begin = System.currentTimeMillis();
+		for (int i = 0; i < 10000000; i++) {
+			nextId();
+			// idSet.add(worker.nextId());
+			// System.out.println(id);
+		}
+		System.out.println(Thread.currentThread().getName() + " ---> " + "time: " + (System.currentTimeMillis() - begin));
+		System.out.println(Thread.currentThread().getName() + " ---> " + "Interrupted: " + interrupted);
+		System.out.println(Thread.currentThread().getName() + " ---> " + "idled: " + idled);
+		// System.out.println(Interrupted);
+		// System.out.println(idSet.size());
+		// IOUtil.write2File(new File("idworker.txt"), idSet);
 	}
 }
