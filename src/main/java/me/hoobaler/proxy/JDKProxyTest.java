@@ -1,3 +1,4 @@
+/*
 package me.hoobaler.proxy;
 
 import me.hoobaler.util.ProxyUtil;
@@ -19,7 +20,8 @@ public class JDKProxyTest {
         HelloWorld helloWorld = name -> System.out.println("你好, " + name);
 
         // this is a simplified way
-        /*
+        */
+/*
         HelloWorld iproxy = (HelloWorld) Proxy.newProxyInstance(JDKProxyTest.class.getClassLoader(), new Class<?>[]{HelloWorld.class},
                 (proxy, method, arg2s) -> {
                     System.out.println("before invoke");
@@ -27,7 +29,8 @@ public class JDKProxyTest {
                     System.out.println("after invoke");
                     return obj;
                 });
-        */
+        *//*
+
 
         // this is a general way
         InvocationHandler handler = (proxy, method, arg3s) -> {
@@ -48,3 +51,4 @@ public class JDKProxyTest {
         iproxy.sayHello("二冬");
     }
 }
+*/

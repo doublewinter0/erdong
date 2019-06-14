@@ -5,26 +5,22 @@ import org.junit.Test;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.util.Arrays.sort;
 
 public class ITest {
 
 	@Test
-	public void double2Int() {
-		long l = 123456789876L;
-		int i = (int) l; // -1097261708
-		long lower32bit = l << 32 >>> 32;
-		System.out.println(Integer.toHexString(i).equals(Long.toHexString(lower32bit)));
-
-		System.out.println("--- I am split line ---");
-		System.out.println(Integer.MAX_VALUE);
-		double d1 = 123456789876.123;
-		double d2 = 123.123;
-		double d3 = 123456789.123;
-		System.out.println((int) d1);
-		System.out.println((int) d2);
-		System.out.println((int) d3);
+	public void setTest() {
+		Set<Long> idSet = Collections.synchronizedSet(new HashSet<>());
+		idSet.add(1L);
+		idSet.add(2L);
+		idSet.add(3L);
+		idSet.add(1L);
+		System.out.println(idSet);
 	}
 
     @Test

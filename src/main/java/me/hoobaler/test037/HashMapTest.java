@@ -4,6 +4,7 @@
  * One is Gauss, and another is Évariste Galois.
  */
 
+/*
 package me.hoobaler.test037;
 
 import me.hoobaler.util.ReflectUtil;
@@ -127,4 +128,4 @@ public class HashMapTest {
         System.out.print(" --> key = " + nodeObj.getKey() + ", value = " + nodeObj.getValue());
         exploreLink(nodeObj);
     }
-}
+}*/

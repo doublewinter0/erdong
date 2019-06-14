@@ -11,7 +11,7 @@ repositories {
     jcenter()
 }
 
-group = 'com.trasepi'
+group = 'me.hoobaler'
 version = '1.0.0'
 sourceCompatibility = 1.8
 
@@ -21,7 +21,6 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.3.0-alpha4'
     compile 'commons-codec:commons-codec:1.12'
     compile 'joda-time:joda-time:2.10'
-
 
     compileOnly 'org.projectlombok:lombok:1.18.2'
 

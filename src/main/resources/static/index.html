@@ -1,9 +1,3 @@
-<!--
-  --This line id for God!
-  --Created by trasepi on 2018/7/4 19:33
-  --One is Gauss, and another is Évariste Galois.
--->
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -11,40 +5,71 @@
     <title>Title</title>
 </head>
 <body>
-    <script>
-        function disp() {
-            console.log((0.1).toPrecision(50));
-            console.log((0.2).toPrecision(50));
-            console.log((0.1 + 0.1).toPrecision(50));
-            console.log((0.3).toPrecision(50));
-            console.log((0.1 + 0.1 + 0.1).toPrecision(50));
-            console.log((0.4).toPrecision(50));
-            console.log((0.1 + 0.1 + 0.1 + 0.1).toPrecision(50));
-            console.log((0.5).toPrecision(50));
-            console.log((0.1 + 0.1 + 0.1 + 0.1 + 0.1).toPrecision(50));
-            console.log((0.1 + 0.4).toPrecision(100));
-            console.log((0.2 + 0.3).toPrecision(50));
-            console.log((0.6).toPrecision(50));
-            console.log((0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1).toPrecision(50));
-            console.log((0.1 + 0.5).toPrecision(50));
-            console.log((0.2 + 0.4).toPrecision(50));
-            console.log((0.3 + 0.3).toPrecision(50));
-            console.log("------我是分割线------");
-            console.log(0.1 === 0.1);
-            console.log((0.1 + 0.1) === 0.2);
-            console.log((0.1 + 0.1 + 0.1) === 0.3);
-            console.log((0.1 + 0.1 + 0.1 + 0.1) === 0.4);
-            console.log((0.1 + 0.1 + 0.1 + 0.1 + 0.1) === 0.5);
-            console.log((0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1) === 0.6);
-            console.log((0.6 - 0.1) === 0.5);
-            console.log((0.2 + 0.4) === 0.6);
-            console.log((0.1 + 0.5) === 0.6);
-            console.log((0.3 + 0.3) === 0.6);
-        }
+<button onclick="btn()">换一个</button>
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+<script>
+	const img =
+		[
+			"https://unpkg.com/live2d-widget-model-haru/01/assets/haru01.model.json",
+			"https://unpkg.com/live2d-widget-model-haru/02/assets/haru02.model.json",
+			"https://unpkg.com/live2d-widget-model-hibiki/assets/hibiki.model.json",
+			"https://unpkg.com/live2d-widget-model-hijiki/assets/hijiki.model.json",
+			"https://unpkg.com/live2d-widget-model-miku/assets/miku.model.json",
+			"https://unpkg.com/live2d-widget-model-shizuku/assets/shizuku.model.json",
+			"https://unpkg.com/live2d-widget-model-nico/assets/nico.model.json",
+			"https://unpkg.com/live2d-widget-model-nietzsche/assets/nietzche.model.json",
+			"https://unpkg.com/live2d-widget-model-unitychan/assets/unitychan.model.json",
+			"https://unpkg.com/live2d-widget-model-wanko/assets/wanko.model.json",
+			"https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json",
+			"https://unpkg.com/live2d-widget-model-z16/assets/z16.model.json",
+		];
 
-        window.onload = function (ev) {
-            disp();
-        }
-    </script>
+	let index = 0;
+
+	function btn() {
+		index = index <= img.length - 1 ? ++index : 0;
+		console.log(img[index]);
+		console.log(index);
+		if (document.getElementById("live2d-widget") != null) {
+			document.body.removeChild(document.getElementById("live2d-widget"))
+		}
+		widget(img[index])
+	}
+
+	function widget(url) {
+		L2Dwidget.init(
+			{
+				model: {
+					jsonPath: "https://unpkg.com/live2d-widget-model-shizuku/assets/shizuku.model.json",
+					"scale": 1
+				},
+				display: {
+					"position": "right",
+					"width": 150,
+					"height": 350,
+					"hOffset": 0,
+					"vOffset": -20
+				},
+				mobile: {
+					"show": true,
+					"scale": 0.25
+				},
+				react: {
+					"opacityDefault": 0.7,
+					"opacityOnHover": 0.2
+				}
+			});
+	}
+
+	window.onload = function () {
+		/*document.onkeydown = function (event) {
+			const ev = event || window.event || arguments.callee.caller.arguments[0];
+		};*/
+		btn();
+	};
+
+	// 禁止右键
+	document.oncontextmenu = () => false;
+</script>
 </body>
 </html>

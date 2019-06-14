@@ -2,6 +2,10 @@ package me.hoobaler.idgen;
 
 import org.joda.time.DateTime;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author erdong
  * @description 雪花 id
@@ -24,45 +28,41 @@ public class IDWorker implements Runnable {
 		TWEPOCH = dateTime.getMillis();
 	}
 
+	private Set<Long> idSet = Collections.synchronizedSet(new HashSet<>());
+	// private Set<Long> idSet = new HashSet<>();
 	private long workerId;
 	private long datacenterId;
 	private long sequence = 0;
 
 	private long interrupted = 0;
 	private long idled = 0;
-	/**
-	 * 2018/9/29日，从此时开始计算，可以用到2089年
-	 */
-
 
 	private long workerIdBits = 5L;
 	private long datacenterIdBits = 5L;
 	private long sequenceBits = 12L;
-	// 得到 0...0111111111111111
+	// 0...0111111111111111
 	private final long sequenceMask = ~(-1L << sequenceBits);
 	private long workerIdShift = sequenceBits;
 	private long datacenterIdShift = sequenceBits + workerIdBits;
 	private long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
 	private long lastTimestamp = -1L;
 
-
-	public IDWorker(long datacenterId, long workerId) {
+	private IDWorker(long datacenterId, long workerId) {
 		this.datacenterId = datacenterId;
 		this.workerId = workerId;
 	}
 
 	public static void main(String[] args) {
-		// Set<Long> idSet = new LinkedHashSet<>();
-		// IDWorker worker = new IDWorker(1, 1);
+		IDWorker worker = new IDWorker(1, 1);
 		for (int i = 0; i < 4; i++) {
-			Thread thread = new Thread(new IDWorker(1, 1));
+			Thread thread = new Thread(worker);
 			thread.setName("thread" + i);
 			thread.start();
 		}
 
 	}
 
-	public synchronized long nextId() {
+	private synchronized long nextId() {
 		long timestamp = timeGen();
 		// 时间回拨，抛出异常
 		if (timestamp < lastTimestamp) {
@@ -109,16 +109,15 @@ public class IDWorker implements Runnable {
 		// long Interrupted = 0;
 		// System.out.println(Thread.currentThread().getName() + " ---> " + "begin...");
 		long begin = System.currentTimeMillis();
-		for (int i = 0; i < 10000000; i++) {
-			nextId();
-			// idSet.add(worker.nextId());
+		for (int i = 0; i < 1000000; i++) {
+			long id = nextId();
+			idSet.add(id);
 			// System.out.println(id);
 		}
 		System.out.println(Thread.currentThread().getName() + " ---> " + "time: " + (System.currentTimeMillis() - begin));
 		System.out.println(Thread.currentThread().getName() + " ---> " + "Interrupted: " + interrupted);
 		System.out.println(Thread.currentThread().getName() + " ---> " + "idled: " + idled);
-		// System.out.println(Interrupted);
-		// System.out.println(idSet.size());
+		System.out.println(idSet.size());
 		// IOUtil.write2File(new File("idworker.txt"), idSet);
 	}
 }
