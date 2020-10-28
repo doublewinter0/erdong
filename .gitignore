@@ -34,3 +34,4 @@ bin/
 Thumbs.db
 generated/
 src/test/resources/
+runtime/

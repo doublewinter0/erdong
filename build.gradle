@@ -1,9 +1,6 @@
-// This line is for GOD!
-
 plugins {
-    id 'java'
-    id 'idea'
-    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id "java"
+    id "idea"
 }
 
 repositories {
@@ -11,24 +8,23 @@ repositories {
     jcenter()
 }
 
-group = 'me.hoobaler'
-version = '1.0.0'
+group = "ren.erdong"
+version = "1.0.0"
 sourceCompatibility = 1.8
 
 dependencies {
     // 加载本地 jar 包
-    // compile fileTree(dir: 'lib', include: ['*.jar'])
-    compile 'ch.qos.logback:logback-classic:1.3.0-alpha4'
-    compile 'commons-codec:commons-codec:1.12'
-    compile 'joda-time:joda-time:2.10'
+    // compile fileTree(dir: "lib", include: ["*.jar"])
+    implementation "commons-codec:commons-codec:1.12"
+    implementation "joda-time:joda-time:2.10"
+    implementation "ch.qos.logback:logback-classic:1.3.0-alpha5"
 
-    compileOnly 'org.projectlombok:lombok:1.18.2'
 
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:4.12"
 }
 
 // delete ugly
-task purge(type: Delete, group: 'build', description: '删除无用的构建目录') {
-    delete 'out', 'build'
+task purge(type: Delete, group: "build", description: "删除无用的构建目录") {
+    delete "out", "build"
     followSymlinks = true
 }
