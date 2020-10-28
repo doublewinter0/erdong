@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class Fraudulent {
 
     private static final double PROPORTION;
-    private static int[] initCards;
+    private static final int[] initCards;
     private static long count4StraightFlush;
     private static long count4Leopard;
 
@@ -24,19 +24,19 @@ public class Fraudulent {
         int allCardsNum = 52;
         long begin = System.currentTimeMillis();
 
-        for (int s = 1; s <= 1000000000; s++) {
+        for (int s = 1; s <= 100000000; s++) {
             int[][] cardinal2s = dealCards(tabCardsNum, allCardsNum);
             for (int[] cardinals : cardinal2s) {
                  int[][] quomod2s = quomodSort(cardinals);
                  if (isStraightFlush(quomod2s[0], quomod2s[1])) count4StraightFlush++;
                  if (isLeopard(quomod2s[1])) count4Leopard++;
              }
-            if (s % 10000000 == 0) {
+            if (s % 1000000 == 0) {
                 System.out.println("count4StraightFlush = " + count4StraightFlush);
                 System.out.println("      count4Leopard = " + count4Leopard);
                 System.out.println("绝对误差: " + Math.abs(PROPORTION - count4StraightFlush * 1.0 / count4Leopard));
                 long semiend = System.currentTimeMillis();
-                System.out.println("已完成 : " + (s / 10000000) + "%, 已耗时: " + IMath.timeFormat(semiend - begin));
+                System.out.println("已完成 : " + (s / 1000000) + "%, 已耗时: " + IMath.timeFormat(semiend - begin));
             }
         }
     }
@@ -67,7 +67,7 @@ public class Fraudulent {
         if (cardinals.length != 3) throw new IllegalArgumentException("Please Intput Correct Args!");
 
         int length = cardinals.length;
-        int[] quotients = new int[length];
+            int[] quotients = new int[length];
         int[] modules = new int[length];
         int[][] quomod2s = new int[2][length];
         for (int i = 0; i < length; i++) {
