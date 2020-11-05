@@ -1,5 +1,6 @@
 /*
-package me.hoobaler.util;
+package ren.erdong.util;
+
 
 import sun.misc.Unsafe;
 
@@ -20,4 +21,5 @@ public class ReflectUtil {
             // ignore
         }
     }
-}*/
+}
+*/

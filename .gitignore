@@ -35,3 +35,4 @@ Thumbs.db
 generated/
 src/test/resources/
 runtime/
+com/sun/proxy/
